@@ -1,0 +1,6 @@
+{
+  "name": "ESIC MedStock",
+  "description": "Real-time healthcare companion app for ESIC patients to monitor medicine stocks, check queues, and receive restock alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

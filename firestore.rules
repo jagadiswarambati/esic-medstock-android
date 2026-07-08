@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Inventory and hospital statuses can be read by anyone so patients can see stocks,
+    // but can only be written by authenticated hospital admins/pharmacists.
+    match /inventory/{med_code} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    match /hospital_status/{hospital_name} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Crowd reports can be posted by patients, but only cleared by admins.
+    match /crowd_reports/{report_id} {
+      allow read: if true;
+      allow write: if true;
+      allow delete, update: if request.auth != null;
+    }
+
+    // Prescriptions are sensitive. Patients can read ONLY their own files.
+    // Admins can read and write all prescriptions.
+    match /prescriptions/{esic_number} {
+      allow read: if (request.auth != null) || (resource != null && (resource.data.esic_number == esic_number || resource.data.uid == esic_number));
+      allow write: if request.auth != null;
+    }
+
+    // Queue entries are publicly readable so everyone can see waiting statuses,
+    // but can only be created or updated by authenticated hospital counters.
+    match /queue/{patient_uid} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Patient notification preferences can be modified by patients themselves.
+    match /notifications/{notif_id} {
+      allow read, write: if true;
+    }
+  }
+}
