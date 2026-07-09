@@ -34,3 +34,4 @@ The application uses Firestore collections for inventory, prescriptions, queue i
 The project can be extended with OTP authentication, secure backend APIs, medicine restock notifications, predictive availability, and improved QR-based prescription verification.
 
 > This project is an educational prototype and is not an official ESIC application.
+> To install the above project as app :https://drive.google.com/file/d/1mAbE684_dJaLNQRN6JobWFMANuxk1QUK/view?usp=drivesdk
